@@ -1,20 +1,28 @@
 import { useState } from "react";
 import CountButton from "./components/countButton/CountButton";
 import InputForm from "./components/inputForm/inputForm";
-
+import type { TCount } from "./types/types";
 
 function App() {
   const [startValue, setStartValue] = useState(0);
   const [stepValue, setStepValue] = useState(1);
-  const [count, setCount] = useState(startValue);
+  const [count, setCount] = useState<TCount>({
+    value: startValue,
+    step: stepValue,
+  });
   const handleSetStart = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setCount(startValue);
+    setCount((currCount) => {
+      console.log("handleSetStart");
+
+      return { ...currCount, value: startValue };
+    });
+    console.dir(count);
   };
 
   const handleSetStep = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setCount(startValue);
+    setCount((currCount) => ({ ...currCount, step: stepValue }));
   };
 
   return (

@@ -1,15 +1,35 @@
-import type { TCountButtonProps } from "../../types/types";
+import type { TCount, TCountButtonProps } from "../../types/types";
 import Button from "../button/Button";
+import { MAX_VALUE, MIN_VALUE } from "../constants/constants";
+import Display from "../display/display";
 
 export default function CountButton({ count, setCount }: TCountButtonProps) {
   const handleCountUp = () => {
-    setCount((count) => ( count < 999 ? count + 1 : 999));
+    console.log("handleCountUp");
+    console.dir(count);
+
+    setCount((currCount: TCount) => ({
+      ...currCount,
+      value:
+        currCount.value < MAX_VALUE
+          ? currCount.value + currCount.step
+          : MAX_VALUE,
+    }));
   };
   const handleCountDown = () => {
-    setCount((count) => ( count > 0 ? count - 1 : 0));
+    console.log("handleCountDown");
+    console.dir(count);
+
+    setCount((currCount: TCount) => ({
+      ...currCount,
+      value:
+        currCount.value > MIN_VALUE
+          ? currCount.value - currCount.step
+          : MIN_VALUE,
+    }));
   };
   const handleCountReset = () => {
-    setCount(0);
+    setCount({ value: 0, step: 1 });
   };
 
   return (
@@ -20,7 +40,7 @@ export default function CountButton({ count, setCount }: TCountButtonProps) {
           symbol="+"
           handleClick={handleCountUp}
         />
-        <Button styles="bg-sky-600" symbol={count} />
+        <Display styles="bg-sky-600" count={count} />
         <Button
           styles="bg-orange-600 rounded-r-lg"
           symbol="-"
