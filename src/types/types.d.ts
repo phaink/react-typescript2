@@ -21,3 +21,7 @@ export type TInputFormProps = {
   setInputValue: React.Dispatch<React.SetStateAction<number>>;
   handleSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 };
+
+export type THeaderFooteProps = {
+  siteTitle: string;
+};
